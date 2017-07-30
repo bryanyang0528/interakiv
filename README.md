@@ -18,4 +18,4 @@ Interactive with gamers in the world
 
 ## System Design 
 
-![demo](system.png)
+![demo](interaktiv.png)
