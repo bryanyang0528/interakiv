@@ -310,9 +310,8 @@
             <div class="row" style="height: 530px;">
                 <div class="col-md-9">
                     <div id="loader"></div>
-                    <video id="video" style="width: 100%; border-radius:5px">
-                        
-
+                    <video id="video" style="width: 100%; border-radius:5px" autoplay loop preload="auto">
+                        <source src="{% static "demo.mp4" %}" type="video/mp4">
                     </video>
                 </div>
                 <div class="col-md-3" style="height: 100%;">
@@ -406,22 +405,22 @@
 
 
 <script>
-    var loader = $("#loader");
-    loader.addClass('spinner');
-    if(Hls.isSupported()) {
-        var video = document.getElementById('video');
-        var hls = new Hls();
-        // hls.loadSource("https://video-weaver.tpe01.hls.ttvnw.net/v1/playlist/CpEDzT8Q4AHpGOIGX3DljkbrYjo1DDKrUgge_s5Mw59om6gYJtibD6lzmuESvMJGZ_WfticUyyOil_P7-L-dIowema7NudqFRMm2hh86VE6EOrvSopc_qalbgmdrL7TxuN6rRakZXUnAsMo99NhqqGoaFmDK-uzeUhqzfxjZLn3ONjWoWKFIYo8YU7Qodx9BPlwpp92w5w1CV_Qu3HtF0KhXTjjoEk16IAXCAQmUYuFxEmU4K4GyEcDkBvdWrZjFY9B7u32zj9w5k1lDDDx6Jowj4OdPFkRHRQN1sInBmBodMqEBXlnc1-YBdfyn2yznOkO_ySOtO7_VWGsCvIA7eERuf5FJSLmKgJ3I6mFQUiAryfJEZ9tb45gXu-LjMRq9Eit803-w-V9Lk0sW2LW6kpRt-zrdWFjja1ZYBL0gjJLIkauOcuSTcoqTadUGyjBX7NR7ROrWRUCNvcaWzG8eCPVHSUqcwyrMfeevhH22EvPRvmJg3NUXAEJ4iMfcGAhZ2HqMIq1gfLVha_qcNEuMahY8qHYSEJsF0-gEcPaOMBTAUdQ1fgQaDLeDRxPZxG-Ev-aVXA.m3u8");
+    // var loader = $("#loader");
+    // loader.addClass('spinner');
+    // if(Hls.isSupported()) {
+    //     var video = document.getElementById('video');
+    //     var hls = new Hls();
+    //     // hls.loadSource("https://video-weaver.tpe01.hls.ttvnw.net/v1/playlist/CpEDzT8Q4AHpGOIGX3DljkbrYjo1DDKrUgge_s5Mw59om6gYJtibD6lzmuESvMJGZ_WfticUyyOil_P7-L-dIowema7NudqFRMm2hh86VE6EOrvSopc_qalbgmdrL7TxuN6rRakZXUnAsMo99NhqqGoaFmDK-uzeUhqzfxjZLn3ONjWoWKFIYo8YU7Qodx9BPlwpp92w5w1CV_Qu3HtF0KhXTjjoEk16IAXCAQmUYuFxEmU4K4GyEcDkBvdWrZjFY9B7u32zj9w5k1lDDDx6Jowj4OdPFkRHRQN1sInBmBodMqEBXlnc1-YBdfyn2yznOkO_ySOtO7_VWGsCvIA7eERuf5FJSLmKgJ3I6mFQUiAryfJEZ9tb45gXu-LjMRq9Eit803-w-V9Lk0sW2LW6kpRt-zrdWFjja1ZYBL0gjJLIkauOcuSTcoqTadUGyjBX7NR7ROrWRUCNvcaWzG8eCPVHSUqcwyrMfeevhH22EvPRvmJg3NUXAEJ4iMfcGAhZ2HqMIq1gfLVha_qcNEuMahY8qHYSEJsF0-gEcPaOMBTAUdQ1fgQaDLeDRxPZxG-Ev-aVXA.m3u8");
         
-        hls.loadSource("https://wowza.jwplayer.com/live/jelly.stream/playlist.m3u8");
-        // hls.loadSource("http:///localhost/hls/" + "{{ show.m3u8|safe }}" + "/index.m3u8");
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED,function() {
-            video.play();
-            loader.removeClass('spinner');
+    //     hls.loadSource("https://wowza.jwplayer.com/live/jelly.stream/playlist.m3u8");
+    //     // hls.loadSource("http:///localhost/hls/" + "{{ show.m3u8|safe }}" + "/index.m3u8");
+    //     hls.attachMedia(video);
+    //     hls.on(Hls.Events.MANIFEST_PARSED,function() {
+    //         video.play();
+    //         loader.removeClass('spinner');
 
-        });
-    }
+    //     });
+    // }
 
     function genMockInformation(el) {
         var $el = $(el);
