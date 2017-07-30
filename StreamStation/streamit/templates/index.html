@@ -1,0 +1,445 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Interakiv</title>
+    <link rel="icon" href="{% static "images/icon.png" %}">
+    <meta name="description" content="Interakiv with the world">
+    <meta name="author" content="Interakiv">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css" />
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <link href="{% static "chatroom/chat.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- background plugin stylesheet -->
+    <link rel="stylesheet" href="//releases.flowplayer.org/background/flowplayer.background.css">
+    <link href="http://vjs.zencdn.net/6.2.4/video-js.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Dosis|Teko:500" rel="stylesheet">
+
+
+    {% block extend-style %}
+
+<style type="text/css">
+    /*.pos-fixed {
+        position: fixed;
+    }*/
+
+    .full-width {
+        width: 100%;
+    }
+
+    .top-nav {
+        height: 5rem;
+        z-index: 1000;
+        align-items: center;
+        flex-wrap: nowrap;
+        display: flex;
+    }
+
+    body {
+        font-family: 'Teko', sans-serif;
+        background-image:url({% static "images/background2.jpg" %});
+        color: #fff;
+    }
+    .inputMessage {
+        /*font-family: 'Merriweather', sans-serif;*/
+        background: #141828;
+        border: 2px solid rgba(27,29,33,0.78);
+        width: 95%;
+        font-size: 18px;
+    }
+
+    .log {
+        display: none;
+    }
+
+    .chatArea {
+        background: rgba(200,200,200,0.05);
+        height: 480px;
+        /*border-left: thin solid #aaa;*/
+        margin-left: -10px;
+    }
+
+    .keyArea {
+        height: 100px;
+        background: rgba(200,200,200,0.05);
+        /*border: thin solid #aaa;*/
+        margin-left: -10px;
+    }
+
+    .keys {
+        text-align:center;
+        background: rgba(250, 250, 250, 0.1);
+        height: 50px;
+        /*width: 80%; */
+        /*border-radius:10px;*/
+    }
+    /*top right bottom left*/
+    .key {
+        position: relative;
+        border-style:solid;
+        /*border-color:#D5D6AD #C1C1A8 #CDCBA5 #E7E5C5;*/
+        border-color:rgb(173, 213, 214) rgb(168, 193, 193) rgb(165, 203, 205) rgb(197, 229, 231);
+        border-width:0px 1px 6px 1px;
+        background: rgb(180, 212, 214);
+        /*background:#D6D4B4;*/
+        display:inline-block;
+        border-radius:3px;
+        margin:10px;
+    }
+
+    .key span {
+        position: relative;
+        background: rgb(51, 51, 153);
+        color: #fff;
+        /*background:#ECEECA;*/
+        /*color:#5D5E4F;*/
+        display:block;
+        font-size:22px;
+        padding:0 2px;
+        border-radius:3px;
+        width:24px;
+        height:28px;
+        line-height:28px;
+        text-align:center;
+        font-weight:bold;
+        letter-spacing:1px;
+        text-transform:uppercase;
+    }
+    .key.wide span {
+        width:auto;
+        padding:0 12px;
+    }
+
+    .key.active span {
+        background: #df158a;
+    }
+
+    .key.active {
+        top: 4px;
+        border-width:0px 1px 4px 1px;
+    }
+
+    
+
+    @keyframes spinner {
+      to {transform: rotate(360deg);}
+    }
+
+
+    .spinner:before {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 50%;
+      border-top: 2px solid #07d;
+      border-right: 2px solid transparent;
+      animation: spinner .5s linear infinite;
+    }
+
+    .people-wrap {
+        margin-top: 10px;
+      width: 100%;
+      display: inline-block;
+      background: rgba(200,200,200,0.05);
+      /*border: red solid*/
+    }
+    .people,
+    .card {
+      display: inline-block;
+      vertical-align: middle
+    }
+    img {
+      display: block
+    }
+
+    .right {
+        position: absolute;
+        right: 0px;
+    }
+
+    .btn:hover {
+        font-size: 16px;
+        color: #fff;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    li>a {
+        color: #fff;
+        background:  #ff5252;
+        border-radius: 5px;
+        font-size: 16px;
+        height: 30px;
+        margin: 10px 5px;
+        padding-top: 5px !important;
+    }
+
+    .nav>li>a:focus, .nav>li>a:hover {
+        font-size: 16px;
+        background: #ff5252;
+    }
+
+    li>div {
+        color: #fff;
+        background:  transparent;
+        font-size: 16px;
+        height: 30px;
+        margin: 10px 5px;
+        padding-top: 5px !important;
+    }
+
+    .prime-crown__new-offer-count {
+        position: absolute;
+        top: -.1rem;
+        left: -.5rem;
+        background: red;
+        border-radius: .4rem;
+        width:8px;
+        height:8px
+    }
+</style>
+
+    {% endblock extend-style %}
+
+
+</head>
+
+
+<body>
+<div class="container-fluid container-fullwidth">
+    <div class="row">
+        {# <div class="col-md-12"> #}
+            <nav class="js-top-nav top-nav pos-fixed full-width" style="background: #3a3ba4;">
+            {# <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation"> #}
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                         <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" href="#"><i class="fa fa-gamepad fa-6" aria-hidden="true" style="color: #ff5252; font-weight: bold;">&nbsp;Interak!v</i></a>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="#">BROWSE</a>
+                        </li>
+                        <li>
+                            <a href="#">HOT</a>
+                        </li>
+                        <li class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">MORE<strong class="caret"></strong></a>
+                            
+                        </li>
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right right" style="margin-right: 10px;">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" style="width:300px; background:#eee; border-radius: 0px;"/>
+                            </div> 
+                            <button type="submit" class="btn btn-default" style="width:70px; background:#ff5252; border-radius: 0px;">
+                                Search
+                            </button>
+                        </form>
+                        <li>
+                            <div class="prime-crown__new-offer-count"></div>
+                            <div><i class="fa fa-bell" aria-hidden="true"></i></div>
+                            
+                        </li>
+                        <li>
+                            <div><i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+</div>
+                        </li>
+                        <li>
+                             <div><i class="fa fa-home" aria-hidden="true"></i><strong class="caret"></strong></div>
+                            
+                        </li>
+                    </ul>
+                </div>
+                
+            </nav>
+    </div>
+</div>
+<!-- main-content  -->
+        <div class="container-fluid" id="main-content">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="page-header">
+
+                        <h2>
+                            Let's fight together &nbsp; <small><i class="em em-heart"></i></small> &nbsp;  <i class="fa fa-arrow-left" aria-hidden="true" style="color: #df158a"></i> <i class="fa fa-arrow-up" aria-hidden="true" style="color: #37ed3b"></i> <i class="fa fa-arrow-down" aria-hidden="true" style="color: #df158a"></i> <i class="fa fa-arrow-right" aria-hidden="true" style="color: #37ed3b"></i>
+                        </h2>
+                        
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <div class="row" style="height: 40px;">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="fa fa-eye" aria-hidden="true" style="color: red;">&nbsp;<span id="viewing">1,000</span></i>&nbsp;
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-users" aria-hidden="true">&nbsp;1,234,322</i>
+                        </div>
+                        
+                        <div class="right" style="margin-right: 20px;">
+
+                            <button class="btn btn-small" style="width: 80px; background: #df158a;">SUBSCRIBE</button> 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="height: 530px;">
+                <div class="col-md-9">
+                    <div id="loader"></div>
+                    <video id="video" style="width: 100%; border-radius:5px">
+                        
+
+                    </video>
+                </div>
+                <div class="col-md-3" style="height: 100%;">
+                    <div>
+                        <div class="chatArea">
+        
+                            <ul class="messages"></ul>
+                        </div>
+                        <input class="inputMessage" placeholder="Let's chat"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height: 20px;"></div>
+            <div class="row" style="height: 120px;">
+                <div class="col-md-9">
+                    {# <div style="background: rgba(250, 250, 250, 0.1); height: 200px; width: 80%; border-radius:20px;"> #}
+                        <div class="keys">
+                            <div class="key" id="q"><span>Q</span></div>
+                            <div class="key" id="w"><span>W</span></div>
+                            <div class="key" id="e"><span>E</span></div>
+                            <div class="key" id="r"><span>R</span></div>
+                            <div class="key" id="left"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></div>
+                            <div class="key" id="right"><span><i class="fa fa-arrow-right" aria-hidden="true"></i></span></div>
+                            <div class="key" id="up"><span><i class="fa fa-arrow-up" aria-hidden="true"></i></span></div>
+                            <div class="key" id="down"><span><i class="fa fa-arrow-down" aria-hidden="true"></i></span></div>
+                            
+                            
+                        </div>
+                        <div class="keys">
+                            <div class="key wide" id="space"><span>SPACE</span></div>
+                            <div class="key wide" id="enter"><span>ENTER</span></div>
+                        </div>
+                    {# </div> #}
+                </div>
+
+                <div class="col-md-3">
+                    <div>
+                        <div class="keyArea">
+                            <ul class="keymessages" style="height: 100%;"></ul>
+                        </div>
+                        {# <input class="inputMessage" placeholder="Let's chat"/> #}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="height: 100%;">
+            <div class="col-md-9">
+                <div class="people-wrap">
+                  <div class="people">
+                    <a href="#">
+                      <img src="{% static "images/avatar.png" %}" style="width: 64px; height: 64px;">
+                    </a>
+                  </div>
+                  <div class="card">
+                        <h3 class="title">Monstercat
+                        <small>
+                            <i class="fa fa-star" aria-hidden="true" style="color: #ffcc31;"></i>&nbsp;
+                            <i class="fa fa-star" aria-hidden="true" style="color: #ffcc31;"></i>&nbsp;
+                            <i class="fa fa-star" aria-hidden="true" style="color: #ffcc31;"></i>&nbsp;&nbsp;
+                        </small>
+                        </h3>
+                    
+                        <a class="name" href="#">Pro FAMILY-FRIENDLY STREAM</a>
+                    
+                  </div>
+                  <div class="card right" style="margin: 30px 50px;  font-size: 30px;">
+                      <span style="padding: 10px 10px;">SOCIAL MEDIA</span>
+                      <i class="fa fa-facebook-square" aria-hidden="true" style="color: #0078d7; margin-right: 10px;"></i>
+                      <i class="fa fa-youtube-play" aria-hidden="true" style="color: red; margin-right: 10px;"></i>
+                      <i class="fa fa-twitch" aria-hidden="true" style="color: #37aad5; margin-right: 10px;"></i>
+                      <i class="fa fa-instagram" aria-hidden="true" style="color: #df158a; margin-right: 10px;"></i>
+                      
+
+                  </div>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+    {# </div> #}
+{# </div> #}
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{# <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.4/socket.io.min.js"></script> #}
+<script src="{% static "chatroom/chat.js" %}"></script>
+<script src="{% static "keyevent/key.js" %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+
+
+<script>
+    var loader = $("#loader");
+    loader.addClass('spinner');
+    if(Hls.isSupported()) {
+        var video = document.getElementById('video');
+        var hls = new Hls();
+        // hls.loadSource("https://video-weaver.tpe01.hls.ttvnw.net/v1/playlist/CpEDzT8Q4AHpGOIGX3DljkbrYjo1DDKrUgge_s5Mw59om6gYJtibD6lzmuESvMJGZ_WfticUyyOil_P7-L-dIowema7NudqFRMm2hh86VE6EOrvSopc_qalbgmdrL7TxuN6rRakZXUnAsMo99NhqqGoaFmDK-uzeUhqzfxjZLn3ONjWoWKFIYo8YU7Qodx9BPlwpp92w5w1CV_Qu3HtF0KhXTjjoEk16IAXCAQmUYuFxEmU4K4GyEcDkBvdWrZjFY9B7u32zj9w5k1lDDDx6Jowj4OdPFkRHRQN1sInBmBodMqEBXlnc1-YBdfyn2yznOkO_ySOtO7_VWGsCvIA7eERuf5FJSLmKgJ3I6mFQUiAryfJEZ9tb45gXu-LjMRq9Eit803-w-V9Lk0sW2LW6kpRt-zrdWFjja1ZYBL0gjJLIkauOcuSTcoqTadUGyjBX7NR7ROrWRUCNvcaWzG8eCPVHSUqcwyrMfeevhH22EvPRvmJg3NUXAEJ4iMfcGAhZ2HqMIq1gfLVha_qcNEuMahY8qHYSEJsF0-gEcPaOMBTAUdQ1fgQaDLeDRxPZxG-Ev-aVXA.m3u8");
+        
+        hls.loadSource("https://wowza.jwplayer.com/live/jelly.stream/playlist.m3u8");
+        // hls.loadSource("http:///localhost/hls/" + "{{ show.m3u8|safe }}" + "/index.m3u8");
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+            video.play();
+            loader.removeClass('spinner');
+
+        });
+    }
+
+    function genMockInformation(el) {
+        var $el = $(el);
+        // console.log($el.text());
+        (function loop() {
+            var rand = Math.round(Math.random() * (3000 - 1000)) + 1000;
+            setTimeout(function() {
+                    var val = parseInt($el.text().replace(/,/g, "")) + Math.round(Math.random() * 20 ) - 10;
+                    $el.text(String(val).replace(/(.)(?=(\d{3})+$)/g,'$1,'));
+                    loop(); 
+
+            }, rand);
+
+        }());
+    }
+
+    genMockInformation($("#viewing"));
+
+</script>
+
+</body>

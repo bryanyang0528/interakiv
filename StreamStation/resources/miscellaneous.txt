@@ -1,0 +1,25 @@
+css:
+#37ed3b 螢光綠
+#37aad5 溫和藍
+#c642ea 紫
+#6441a4 twitch 紫
+#df158a 洋紅
+#0078d7 藍
+#ffcc31 橘黃
+#ff5252 好看的橙
+#141828 要黑不黑
+rgba(27,29,33,0.78) 邊框灰
+
+<html>
+   <head>
+    <style>
+      @font-face { font-family: JuneBug; src: url('JUNEBUG.TTF'); } 
+      h1 {
+         font-family: JuneBug
+      }
+    </style>
+   </head>
+   <body>
+      <h1>Hey, June</h1>
+   </body>
+</html>
